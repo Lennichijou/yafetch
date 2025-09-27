@@ -21,10 +21,11 @@ def main():
     print(f"{header_color}\033[1mPython Version\033[0m: {py_version}")
     print(f"{header_color}\033[1mUptime\033[0m: {uptime}")
     print(f"{header_color}\033[1mCPU\033[0m: {cpu}")
-    print(f"{header_color}\033[1mGPU\033[0m: {gpu}")
+    if gpu is not None:
+        print(f"{header_color}\033[1mGPU\033[0m: {gpu}")
     print(f"{header_color}\033[1mRAM\033[0m: {ram}")
     for part in core.disk_info():
-        print(f"{header_color}Disk {part}", sep='\n')
+        print(f"{header_color}\033[1mDisk {part}", sep='\n')
     if battery is not None:
         print(f"{header_color}\033[1mBattery\033[0m: {battery}")
     for color in Colors:

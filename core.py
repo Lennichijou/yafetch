@@ -1,11 +1,23 @@
 import os
 import subprocess
+from sys import prefix
+
 import psutil
 import platform
 import getpass
 import datetime, time
 import cpuinfo
 import distro
+
+def byte_convert(amount):
+    if amount == 0:
+        return "0 B"
+    sizes = ["B", 'KB', 'MB', 'GB', 'TB', 'PB']
+    i = 0
+    while amount >= 1024 and i < len(sizes)-1:
+        amount /= 1024
+        i += 1
+    return f"{amount:.2f} {sizes[i]}"
 
 def uptime():
     bt = datetime.datetime.fromtimestamp(psutil.boot_time())
@@ -15,7 +27,7 @@ def uptime():
     days = ut.seconds // (3600 * 24)
     if days > 1:
         return f"{days} d {hours} h {mins} min"
-    elif hours < 24:
+    elif 24 > hours > 1:
         return f"{hours} h {mins} min"
     else:
         return f"{mins} min"
@@ -32,7 +44,9 @@ def os_info():
 
 def ram_usage():
     ram_stuff = psutil.virtual_memory()
-    return f"{round(ram_stuff.used / (2**30), 1)} / {round(ram_stuff.total / (2**30), 1)} GB ({ram_stuff.percent}%)"
+    used = byte_convert(ram_stuff.used)
+    total = byte_convert(ram_stuff.total)
+    return f"{used} / {total} ({ram_stuff.percent}%)"
 
 def username():
     return getpass.getuser()
@@ -62,10 +76,10 @@ def cpu_info():
 def disk_info():
     parts = []
     for disk in psutil.disk_partitions():
-        used = psutil.disk_usage(disk.mountpoint).used // (2 ** 30)
-        total = psutil.disk_usage(disk.mountpoint).total // (2 ** 30)
+        used = byte_convert(psutil.disk_usage(disk.mountpoint).used)
+        total = byte_convert(psutil.disk_usage(disk.mountpoint).total)
         percent = psutil.disk_usage(disk.mountpoint).percent
-        parts.append(f"{disk.device}\033[0m: {used} / {total} GB ({percent}%)")
+        parts.append(f"{disk.device}\033[0m: {used} / {total} ({percent}%)")
     return parts
 
 def kernel_version():
