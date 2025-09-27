@@ -24,8 +24,9 @@ def main():
     print(f"{header_color}\033[1mGPU\033[0m: {gpu}")
     print(f"{header_color}\033[1mRAM\033[0m: {ram}")
     for part in core.disk_info():
-        print(f"{header_color}{part}", sep='\n')
-    print(f"{header_color}\033[1mBattery\033[0m: {battery}")
+        print(f"{header_color}Disk {part}", sep='\n')
+    if battery is not None:
+        print(f"{header_color}\033[1mBattery\033[0m: {battery}")
     for color in Colors:
         print(f"{color.value}███",end='')
     print()

@@ -42,7 +42,10 @@ def hostname():
 
 def battery_info():
     battery_stuff = psutil.sensors_battery()
-    return f"{round(battery_stuff.percent)}%"
+    if battery_stuff is not None:
+        return f"{round(battery_stuff.percent)}%"
+    else:
+        return None
 
 def gpu_info():
     system = platform.system()
@@ -62,7 +65,7 @@ def disk_info():
         used = psutil.disk_usage(disk.mountpoint).used // (2 ** 30)
         total = psutil.disk_usage(disk.mountpoint).total // (2 ** 30)
         percent = psutil.disk_usage(disk.mountpoint).percent
-        parts.append(f"\033[1mDisk {disk.device}\033[0m: {used} / {total} GB ({percent}%)")
+        parts.append(f"{disk.device}\033[0m: {used} / {total} GB ({percent}%)")
     return parts
 
 def kernel_version():
@@ -70,4 +73,3 @@ def kernel_version():
 
 def python_version():
     return platform.python_version()
-
