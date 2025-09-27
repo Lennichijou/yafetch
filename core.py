@@ -1,11 +1,9 @@
 import os
 import subprocess
-from sys import prefix
-
 import psutil
 import platform
 import getpass
-import datetime, time
+import datetime
 import cpuinfo
 import distro
 
