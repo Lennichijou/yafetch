@@ -23,9 +23,9 @@ def uptime():
     mins = ut.seconds % 3600 // 60
     hours = ut.seconds % (3600 * 24) // 3600
     days = ut.seconds // (3600 * 24)
-    if days > 1:
+    if days >= 1:
         return f"{days} d {hours} h {mins} min"
-    elif 24 > hours > 1:
+    elif days == 0 and 24 > hours > 1:
         return f"{hours} h {mins} min"
     else:
         return f"{mins} min"
@@ -69,7 +69,7 @@ def gpu_info():
         return None
 
 def cpu_info():
-    return cpuinfo.get_cpu_info()['brand_raw']
+    return f"{cpuinfo.get_cpu_info()['brand_raw']}"
 
 def disk_info():
     parts = []

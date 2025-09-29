@@ -14,7 +14,7 @@ def main():
     battery = core.battery_info()
     ram = core.ram_usage()
     uptime = core.uptime()
-
+    print()
     print(f"{header_color}\033[1m{username}@{hostname}")
     print(f"{header_color}\033[1mOS\033[0m: {os_name}")
     print(f"{header_color}\033[1mKernel\033[0m: {kernel}")
@@ -33,6 +33,7 @@ def main():
     print()
     for color in IntenseColors:
         print(f"{color.value}███", end='')
+    print("\n")
 
 if __name__ == "__main__":
     main()
