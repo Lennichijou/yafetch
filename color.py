@@ -18,5 +18,4 @@ class IntenseColors(Enum):
     BLUE = '\033[94m'
     MAGENTA = '\033[95m'
     CYAN = '\033[96m'
-    LIGHT_GRAY = '\033[97m'
     WHITE = '\033[97m'

@@ -23,12 +23,14 @@ def uptime():
     mins = ut.seconds % 3600 // 60
     hours = ut.seconds % (3600 * 24) // 3600
     days = ut.seconds // (3600 * 24)
-    if days >= 1:
+    if days:
         return f"{days} d {hours} h {mins} min"
-    elif days == 0 and 24 > hours > 1:
+    elif days == 0 and 24 > hours >= 1:
         return f"{hours} h {mins} min"
-    else:
+    elif hours == 0:
         return f"{mins} min"
+    return None
+
 
 def os_info():
     system = platform.system()
@@ -55,7 +57,10 @@ def hostname():
 def battery_info():
     battery_stuff = psutil.sensors_battery()
     if battery_stuff is not None:
-        return f"{round(battery_stuff.percent)}%"
+        percents = f"{round(battery_stuff.percent)}%"
+        if battery_stuff.power_plugged:
+            return f"{percents} [AC Connected]"
+        return percents
     else:
         return None
 
