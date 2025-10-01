@@ -1,5 +1,5 @@
 # yafetch
-![Desktop](img/image.png)
+![Example](img/image.png)
 
 yet another fetch app, written in Python
 
