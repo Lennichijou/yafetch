@@ -18,11 +18,11 @@ def byte_convert(amount):
     return f"{amount:.2f} {sizes[i]}"
 
 def uptime():
-    bt = datetime.datetime.fromtimestamp(psutil.boot_time())
-    ut = (datetime.datetime.now() - bt)
-    mins = ut.seconds % 3600 // 60
-    hours = ut.seconds % (3600 * 24) // 3600
-    days = ut.seconds // (3600 * 24)
+    bt = psutil.boot_time()
+    ut = datetime.datetime.now().timestamp() - bt
+    mins = int(ut % 3600 // 60)
+    hours = int(ut % (3600 * 24) // 3600)
+    days = int(ut // (3600 * 24))
     if days:
         return f"{days} d {hours} h {mins} min"
     elif days == 0 and 24 > hours >= 1:
@@ -35,9 +35,9 @@ def uptime():
 def os_info():
     system = platform.system()
     if system == 'Windows':
-        return f'Windows {(platform.win32_ver()[0])}'
+        return f'{system} {platform.release()}'
     elif system == 'Darwin':
-        return platform.mac_ver()
+        return f"macOS {platform.mac_ver()}"
     elif system == "Linux":
         return distro.name(pretty=True)
     return None
@@ -90,3 +90,8 @@ def kernel_version():
 
 def python_version():
     return platform.python_version()
+
+def locale_info():
+    import locale
+    res = locale.getdefaultlocale()[0]
+    return res
