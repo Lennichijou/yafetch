@@ -81,7 +81,8 @@ def disk_info():
         used = byte_convert(psutil.disk_usage(disk.mountpoint).used)
         total = byte_convert(psutil.disk_usage(disk.mountpoint).total)
         percent = psutil.disk_usage(disk.mountpoint).percent
-        parts.append(f"{disk.device}\033[0m: {used} / {total} ({percent}%)")
+        file_sys = disk.fstype
+        parts.append(f"({disk.device})\033[0m: {used} / {total} ({percent}%) - {file_sys}")
     return parts
 
 def kernel_version():
