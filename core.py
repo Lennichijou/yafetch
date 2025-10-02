@@ -1,4 +1,3 @@
-import os
 import subprocess
 import psutil
 import platform
@@ -95,3 +94,21 @@ def locale_info():
     import locale
     res = locale.getdefaultlocale()[0]
     return res
+
+def motherboard_name():
+    system = platform.system()
+    if system == "Windows":
+        return subprocess.check_output("powershell -Command (Get-WmiObject win32_baseboard).Product",
+                                       shell=True).decode().strip()
+    elif system == "Linux":
+        return subprocess.check_output("cat /sys/devices/virtual/dmi/id/board_name", shell=True).decode().strip()
+    return None
+
+def motherboard_vendor():
+    system = platform.system()
+    if system == "Windows":
+        return subprocess.check_output("powershell -Command (Get-WmiObject win32_baseboard).Manufacturer",
+                                       shell=True).decode().strip()
+    elif system == "Linux":
+        return subprocess.check_output("cat /sys/devices/virtual/dmi/id/board_vendor", shell=True).decode().strip()
+    return None

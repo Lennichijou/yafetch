@@ -15,6 +15,8 @@ def main():
     locale_info = core.locale_info()
     ram = core.ram_usage()
     uptime = core.uptime()
+    mb_name = core.motherboard_name()
+    mb_vendor = core.motherboard_vendor()
 
     print("")
 
@@ -27,6 +29,12 @@ def main():
     print(f"{header_color}\033[1mPython Version\033[0m: {py_version}")
 
     print(f"{header_color}\033[1mUptime\033[0m: {uptime}")
+
+    if mb_vendor is not None:
+        print(f"{header_color}\033[1mMainboard Vendor\033[0m: {mb_vendor}")
+
+    if mb_vendor is not None:
+        print(f"{header_color}\033[1mMainboard Model Name\033[0m: {mb_name}")
 
     print(f"{header_color}\033[1mCPU\033[0m: {cpu}")
 
