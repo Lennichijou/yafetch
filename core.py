@@ -5,6 +5,7 @@ import getpass
 import datetime
 import cpuinfo
 import distro
+import os
 
 def byte_convert(amount):
     if amount == 0:
@@ -59,7 +60,7 @@ def battery_info():
         percents = f"{round(battery_stuff.percent)}%"
         if battery_stuff.power_plugged:
             return f"{percents} [AC Connected]"
-        return percents
+        return f"{percents} [Discharging]"
     else:
         return None
 
@@ -86,7 +87,12 @@ def disk_info():
     return parts
 
 def kernel_version():
-    return platform.release()
+    system = platform.system()
+    if system == "Linux":
+        return platform.release()
+    elif system == "Windows":
+        return platform.win32_ver()[1]
+    return None
 
 def python_version():
     return platform.python_version()
@@ -112,4 +118,12 @@ def motherboard_vendor():
                                        shell=True).decode().strip()
     elif system == "Linux":
         return subprocess.check_output("cat /sys/devices/virtual/dmi/id/board_vendor", shell=True).decode().strip()
+    return None
+
+def shell_info():
+    system = platform.system()
+    if system == "Windows":
+        return f"PowerShell {subprocess.check_output("powershell -Command $PSVersionTable.PSVersion.ToString()", shell=True).decode().strip()}"
+    elif system == "Linux":
+        return subprocess.check_output("$SHELL --version | head -n 1", shell=True).decode().strip()
     return None

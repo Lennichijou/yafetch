@@ -17,6 +17,7 @@ def main():
     uptime = core.uptime()
     mb_name = core.motherboard_name()
     mb_vendor = core.motherboard_vendor()
+    shell_info = core.shell_info()
 
     print("")
 
@@ -25,6 +26,9 @@ def main():
     print(f"{header_color}\033[1mOS\033[0m: {os_name}")
 
     print(f"{header_color}\033[1mKernel\033[0m: {kernel}")
+
+    if shell_info:
+        print(f"{header_color}\033[1mShell\033[0m: {shell_info}")
 
     print(f"{header_color}\033[1mPython Version\033[0m: {py_version}")
 
