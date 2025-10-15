@@ -123,7 +123,10 @@ def motherboard_vendor():
 def shell_info():
     system = platform.system()
     if system == "Windows":
-        return f"PowerShell {subprocess.check_output("powershell -Command $PSVersionTable.PSVersion.ToString()", shell=True).decode().strip()}"
+        shell_name = psutil.Process(os.getpid()).parent().name()
+        if shell_name is 'pwsh.exe' or shell_name is 'powershell.exe':
+            return f"PowerShell {subprocess.check_output(f"{shell_name[:-4]} -Command $PSVersionTable.PSVersion.ToString()", shell=True).decode().strip()}"
+        return None
     elif system == "Linux":
         return subprocess.check_output("$SHELL --version | head -n 1", shell=True).decode().strip()
     return None
