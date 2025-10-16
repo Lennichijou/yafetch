@@ -124,7 +124,7 @@ def shell_info():
     system = platform.system()
     if system == "Windows":
         shell_name = psutil.Process(os.getpid()).parent().name()
-        if shell_name is 'pwsh.exe' or shell_name is 'powershell.exe':
+        if shell_name == 'pwsh.exe' or shell_name == 'powershell.exe':
             return f"PowerShell {subprocess.check_output(f"{shell_name[:-4]} -Command $PSVersionTable.PSVersion.ToString()", shell=True).decode().strip()}"
         return None
     elif system == "Linux":

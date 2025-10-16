@@ -23,6 +23,8 @@ def main():
 
     print(f"{header_color}\033[1m{username}@{hostname}")
 
+    print("="*len(f"{username}@{hostname}"))
+
     print(f"{header_color}\033[1mOS\033[0m: {os_name}")
 
     print(f"{header_color}\033[1mKernel\033[0m: {kernel}")
